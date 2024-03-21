@@ -76,7 +76,7 @@ class _SearchPageState extends State<SearchPage> {
                                 dataController.filterRecipes(searchInputController.text);
 
                               }else{
-                              dataController.fetchRecipeDataModelDataFromFirestore();}
+                                dataController.fetchRecipeDataModelDataFromFirestore();}
                             },
                             style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400),
                             maxLines: 1,
@@ -148,7 +148,7 @@ class _SearchPageState extends State<SearchPage> {
                           onPressed: () {
                             searchInputController.text = dataController.recipeList[index].title;
                             dataController.fetchRecipeDataModelDataFromFirestore().whenComplete(() =>
-                            dataController.filterRecipes( searchInputController.text)
+                                dataController.filterRecipes( searchInputController.text)
                             );
                           },
                           child: Text(
@@ -183,20 +183,20 @@ class _SearchPageState extends State<SearchPage> {
                     ),
 
                     Obx(() =>
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: dataController.searchRecipeList.value.length,
-                      separatorBuilder: (context, index) {
-                        return SizedBox(height: 16);
-                      },
-                           itemBuilder: (context, index) {
-                        return RecipeTile(
-                          data: searchResult[index],
-                          recipeDataModel: dataController.searchRecipeList.value[index],
-                        );
-                      },
-                    ),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: dataController.searchRecipeList.value.length,
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 16);
+                          },
+                          itemBuilder: (context, index) {
+                            return RecipeTile(
+                              data: searchResult[0],
+                              recipeDataModel: dataController.searchRecipeList.value[index],
+                            );
+                          },
+                        ),
                     ),
                   ],
                 ),

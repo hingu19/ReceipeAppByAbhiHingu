@@ -47,7 +47,7 @@ class _NewlyPostedPageState extends State<NewlyPostedPage> {
         },
         itemBuilder: (context, index) {
           return RecipeTile(
-            data: newlyPostedRecipe[index],
+            data: newlyPostedRecipe[0],
             recipeDataModel: dataController.recipeList.value[index],
           );
         },

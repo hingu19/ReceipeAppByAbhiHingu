@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hungry/models/core/recipe.dart';
@@ -34,7 +33,7 @@ class FeaturedRecipeCard extends StatelessWidget {
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
             child: Container(
-              height: 80,
+              // height: 80,
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -42,6 +41,7 @@ class FeaturedRecipeCard extends StatelessWidget {
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   // Recipe Title
                   Text(
@@ -69,14 +69,13 @@ class FeaturedRecipeCard extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 10),
-                        Icon(Icons.alarm, size: 12, color: Colors.white),
-                        Container(
-                          margin: EdgeInsets.only(left: 5),
-                          child: Text(
+                    Expanded(
+                      child: Text(
                             data!.title!,
-                            style: TextStyle(color: Colors.white, fontSize: 10),
+                            style: TextStyle(color: Colors.white, fontSize: 10,overflow:TextOverflow.ellipsis),
                           ),
-                        ),
+                    ),
+
                       ],
                     ),
                   )

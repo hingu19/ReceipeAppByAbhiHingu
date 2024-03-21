@@ -9,7 +9,8 @@ class Recipe {
   List<TutorialStep>? tutorial;
   List<Review>? reviews;
 
-  Recipe({this.title, this.photo, this.calories, this.time, this.description, this.ingridients, this.tutorial, this.reviews});
+  Recipe(
+      {this.title, this.photo, this.calories, this.time, this.description, this.ingridients, this.tutorial, this.reviews});
 
   factory Recipe.fromJson(Map<String, Object> json) {
     return Recipe(
@@ -20,8 +21,28 @@ class Recipe {
       description: json['description'] as String,
     );
   }
-}
 
+  factory Recipe.fromMap(Map<String, dynamic> map) {
+    return Recipe(
+      title: map['title'] as String?,
+      photo: map['photo'] as String?,
+      calories: map['calories'] as String?,
+      time: map['time'] as String?,
+      description: map['description'] as String?,
+      // ingridients: (map['ingridients'] != null)
+      //     ? Ingridient.toList(
+      //     List<Map<String, Object>>.from(map['ingridients']!))
+      //     : null,
+      // tutorial: (map['tutorial'] != null)
+      //     ? TutorialStep.toList(
+      //     List<Map<String, Object>>.from(map['tutorial']!))
+      //     : null,
+      // reviews: (map['reviews'] != null)
+      //     ? Review.toList(List<Map<String, Object>>.from(map['reviews']!))
+      //     : null,
+    );
+  }
+}
 class TutorialStep {
   String? step;
   String? description;
@@ -33,6 +54,13 @@ class TutorialStep {
       'description': description!,
     };
   }
+  factory TutorialStep.fromMap(Map<String, dynamic> map) {
+    return TutorialStep(
+      step: map['step'] as String?,
+      description: map['description'] as String?,
+    );
+  }
+
 
   factory TutorialStep.fromJson(Map<String, Object> json) => TutorialStep(
     step: json['step'] as String,
@@ -53,7 +81,12 @@ class Review {
     review: json['review']as String,
     username: json['username']as String,
   );
-
+  factory Review.fromMap(Map<String, dynamic> map) {
+    return Review(
+      username: map['username'] as String?,
+      review: map['review'] as String?,
+    );
+  }
   Map<String, Object> toMap() {
     return {
       'username': username!,
@@ -75,6 +108,13 @@ class Ingridient {
     name: json['name']as String,
     size: json['size']as String,
   );
+
+  factory Ingridient.fromMap(Map<String, dynamic> map) {
+    return Ingridient(
+      name: map['name'] as String?,
+      size: map['size'] as String?,
+    );
+  }
 
   Map<String, Object> toMap() {
     return {

@@ -10,11 +10,12 @@ class PopularRecipeCard extends StatelessWidget {
   final Recipe? data;
 
   PopularRecipeCard({@required this.data});
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => RecipeDetailPage(data: data, recipeDataModel: null,)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => RecipeDetailPage(data: data, recipeDataModel: null)));
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -55,11 +56,13 @@ class PopularRecipeCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Recipe Title
-                      Text(
-                        data!.title!,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.white, fontSize: 14, height: 150 / 100, fontWeight: FontWeight.w600, fontFamily: 'inter'),
+                      Flexible(
+                        child: Text(
+                          data!.title!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600, fontFamily: 'inter'),
+                        ),
                       ),
                       // Recipe Calories and Time
                       Container(
@@ -72,19 +75,21 @@ class PopularRecipeCard extends StatelessWidget {
                               width: 12,
                               height: 12,
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: 5),
+                            SizedBox(width: 5),
+                            Flexible(
                               child: Text(
                                 data!.calories!,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(color: Colors.white, fontSize: 10),
                               ),
                             ),
                             SizedBox(width: 10),
                             Icon(Icons.alarm, size: 12, color: Colors.white),
-                            Container(
-                              margin: EdgeInsets.only(left: 5),
+                            SizedBox(width: 5),
+                            Flexible(
                               child: Text(
                                 data!.time!,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(color: Colors.white, fontSize: 10),
                               ),
                             ),

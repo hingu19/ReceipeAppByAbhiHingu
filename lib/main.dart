@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:hungry/splash_screen.dart';
 import 'package:hungry/util/colors.dart';
 import 'package:hungry/views/screens/auth/welcome_page.dart';
+import 'package:hungry/views/screens/home_page.dart';
+import 'package:hungry/views/screens/reports.dart';
 
 // Future<void> main() async {
 //   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

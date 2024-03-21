@@ -33,7 +33,7 @@ class AddRecipeForm extends StatefulWidget {
 class _AddRecipeFormState extends State<AddRecipeForm> {
   final titleController = TextEditingController();
   final caloriesController = TextEditingController();
-  final timeController = TextEditingController();
+  final timeController = TextEditingController(text: "15 min");
   final descriptionController = TextEditingController();
   final tutorialController = TextEditingController();
   XFile? imageFile;

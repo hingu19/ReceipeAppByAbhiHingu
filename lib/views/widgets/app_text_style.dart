@@ -96,7 +96,8 @@ class AppTextStyle {
   );
 
   static const homeAppbarTextStyle = TextStyle(
-    fontSize: 15,
+    fontSize: 20,
+    color: primaryWhite,
     fontWeight: FontWeight.w600,
   );
 

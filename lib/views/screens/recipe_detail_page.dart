@@ -84,7 +84,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with TickerProvider
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,
-            title: Text('Search Recipe', style: TextStyle(fontFamily: 'inter', fontWeight: FontWeight.w400, fontSize: 16)),
+            title: Text('Search Recipe', style: TextStyle(fontFamily: 'inter', fontWeight: FontWeight.w400, fontSize: 16,color: primaryWhite)),
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios, color: Colors.white),
               onPressed: () {
@@ -258,6 +258,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> with TickerProvider
                     ),
                     ),
                     SizedBox(width: 12,),
+                    if(widget.recipeDataModel != null)
                     GestureDetector(
                       onTap: () {
                         dataController.updateRecipeDataInFirestore(
@@ -382,8 +383,9 @@ stp++;
                 itemCount:     widget.recipeDataModel != null ?        widget.recipeDataModel!.reviews.length:    widget.data!.reviews!.length,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return ReviewTile(review:  widget.recipeDataModel!.reviews[index]['review'], username:  widget.recipeDataModel!.reviews[index]
-                  ['name'],);
+                  return ReviewTile(review:  widget.recipeDataModel != null ? widget.recipeDataModel!.reviews[index]['review'] :widget.data!.reviews![index].review, username:widget.recipeDataModel != null ?
+                  widget.recipeDataModel!.reviews[index]
+                  ['name']:widget.data!.reviews![index].username);
                 },
               )
             ],

@@ -11,6 +11,7 @@ import 'authController.dart';
 class DataController extends  GetxController{
   RxString profileImageURL=''.obs;
   RxString filterName = "Newest".obs;
+  String adminEmail = "recipesharinga@gmail.com";
 
   void updateProfileImageURL(String newURL){
     profileImageURL.value = newURL;
@@ -24,21 +25,22 @@ class DataController extends  GetxController{
   RxList<RecipeModel> myRecipeDataList = <RecipeModel>[].obs;
   get profilepageURL => null;
 
-  UserModel? user ;
-  User? currentUser = FirebaseAuth.instance.currentUser;
-  Future refreshPage() async {
+  UserModel? currentUser ;
+  User? user = FirebaseAuth.instance.currentUser;
 
-    currentUser = await authController.getCurrentUser();
-    log('----currentUser-----${currentUser.toString()}');
-    if (currentUser != null) {
-      UserModel? user = await authController.getUserById(currentUser!.uid);
-      if (user != null) {
+
+  Future refreshPage() async {
+    user = await authController.getCurrentUser();
+    log('----currentUser-----${user.toString()}');
+    if (user != null) {
+     currentUser = await authController.getUserById(user!.uid);
+      if (currentUser != null) {
         // emailController.text = currentUser!.email.toString();
         // if (user.name != null) {
         //   nameController.text = user.name.toString();
         // }
-        if(user.profileUrl != null){
-          updateProfileImageURL(user.profileUrl.toString());
+        if(currentUser!.profileUrl != null){
+          updateProfileImageURL(currentUser!.profileUrl.toString());
         }
 
       }
@@ -65,7 +67,7 @@ class DataController extends  GetxController{
     return filteredList; // Return the filtered and sorted list
   }
   Future<List<RecipeModel>> fetchRecipeDataModelDataFromFirestore() async {
-    log('----fetchRecipeDataModelDataFromFirestore-----');
+    log('-----isAdmin----->>$user!email==adminEmail');
     // Fetch data from Firestore and create a list of RecipeDataModel objects
     // Assume 'catadd' is the collection name in Firestore
 
@@ -78,13 +80,18 @@ class DataController extends  GetxController{
         'id': doc.id,
       });
     }).toList();
-    recipeList.value = recipeDataModelList;
-    searchRecipeList.value = recipeDataModelList;
-    favoriteRecipeDataList.value = recipeDataModelList.where((pet) => pet.favorite!.contains(currentUser!.uid)).toList();
-    myRecipeDataList.value = recipeDataModelList.where((pet) =>pet.userId == currentUser!.uid).toList();
-
+    // if(user!.email==adminEmail) {
+      recipeList.value = recipeDataModelList;
+      searchRecipeList.value = recipeDataModelList;
+      favoriteRecipeDataList.value = recipeDataModelList.where((pet) =>
+          pet.favorite!.contains(user!.uid)).toList();
+      myRecipeDataList.value =
+          recipeDataModelList.where((pet) => pet.userId == user!.uid)
+              .toList();
+    // }
     update();
-    log("----fetchRecipeDataModelDataFromFirestore----");
+    log("----fetchRecipeDataModelDataFromFirestor"
+        "e----");
     log("----RecipeDataModelList----" + recipeDataModelList.length.toString());
 
 
@@ -92,6 +99,19 @@ class DataController extends  GetxController{
   }
 
 
+  Future<UserModel?> getUserById(String userId) async {
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+      if (userDoc.exists) {
+        return UserModel.fromMap(userDoc.data() as Map<String, dynamic>);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error getting user by ID: $e');
+      return null;
+    }
+  }
 
   Future<void> addOrUpdateUserData(UserModel userModel) async {
     log('-----addOrUpdateUserData------');
@@ -178,11 +198,11 @@ class DataController extends  GetxController{
 
       // Get the reference to the document in Firestore
       DocumentReference recipeRef = FirebaseFirestore.instance.collection('recipes').doc(recipeId);
-log('---currentUser---${currentUser.toString()}');
+log('---currentUser---${user.toString()}');
       // Add the review to the reviews array
       recipeModel.reviews!.add({
-        'userId': currentUser!.uid,
-        'name': currentUser!.email,
+        'userId': user!.uid,
+        'name': user!.email,
         'review': reviewTxt,
       });
 

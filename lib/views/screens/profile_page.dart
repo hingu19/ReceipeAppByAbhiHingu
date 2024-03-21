@@ -1,4 +1,4 @@
-import'dart:developer';
+import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:hungry/controller/data_controller.dart';
+import 'package:hungry/views/screens/auth/welcome_page.dart';
 import 'package:hungry/views/screens/home_page.dart';
 import 'package:hungry/views/widgets/app_text_style.dart';
 import 'package:hungry/views/widgets/input_text_field_widget.dart';
@@ -81,10 +82,10 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text(
           'My Profile',
           style: TextStyle(
-            fontFamily: 'inter',
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-            color: primaryWhite
+              fontFamily: 'inter',
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+              color: primaryWhite
           ),
         ),
         leading: IconButton(
@@ -94,25 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              // Your 'Edit' button logic here
-            },
-            child: Text(
-              'Edit',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            style: TextButton.styleFrom(
-              primary: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-            ),
-          ),
+          // Removed the 'Edit' button TextButton
         ],
         systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
@@ -221,12 +204,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   alignment: Alignment.center,
                   child: TextButton(
                     onPressed: () async {
-                      await FirebaseAuth.instance.signOut();
+                      await FirebaseAuth.instance.signOut().whenComplete(() =>
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => LoginModal(),
+                          builder: (context) => WelcomePage(),
                         ),
-                      );
+                      ));
                     },
                     child: Text(
                       'Sign Out',
@@ -297,7 +280,7 @@ class _ProfilePageState extends State<ProfilePage> {
       id: currentUser!.uid,
       email: emailController.text,
       name: nameController.text,
-      profileUrl: imageUrl.toString(),
+      profileUrl: imageUrl.toString(), password: null,
     ));
 
     await CommonMethod()
